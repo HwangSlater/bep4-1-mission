@@ -1,6 +1,6 @@
 package com.back.shared.dto;
 
-import com.back.boundedContext.post.entity.Post;
+import com.back.boundedContext.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,6 +12,7 @@ public class PostDto {
     private final int id;
     private final LocalDateTime createDate;
     private final LocalDateTime modifyDate;
+    private final int postId;
     private final int authorId;
     private final String authorName;
     private final String title;
@@ -22,6 +23,7 @@ public class PostDto {
                 post.getId(),
                 post.getCreateDate(),
                 post.getModifyDate(),
+                post.getId(),
                 post.getAuthor().getId(),
                 post.getAuthor().getNickname(),
                 post.getTitle(),

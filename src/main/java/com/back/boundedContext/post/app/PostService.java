@@ -1,14 +1,11 @@
-package com.back.boundedContext.post.service;
+package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.entity.Member;
-import com.back.boundedContext.post.entity.Post;
-import com.back.boundedContext.post.entity.PostComment;
-import com.back.boundedContext.post.repository.PostRepository;
+import com.back.boundedContext.member.domain.Member;
+import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.global.exception.DomainException;
-import com.back.shared.dto.PostCommentDto;
 import com.back.shared.dto.PostDto;
-import com.back.shared.post.event.PostCommentCreatedEvent;
 import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,18 +31,6 @@ public class PostService {
         );
 
         return post;
-    }
-
-    public PostComment addComment(Post post, Member author, String content) {
-        PostComment postComment = new PostComment(post, author, content);
-
-        post.addComment(postComment);
-
-        eventPublisher.publish(
-                new PostCommentCreatedEvent(new PostCommentDto(postComment))
-        );
-
-        return postComment;
     }
 
     @Transactional(readOnly = true)

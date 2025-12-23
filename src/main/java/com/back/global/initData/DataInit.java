@@ -1,9 +1,9 @@
 package com.back.global.initData;
 
-import com.back.boundedContext.member.entity.Member;
-import com.back.boundedContext.post.entity.Post;
-import com.back.boundedContext.member.service.MemberService;
-import com.back.boundedContext.post.service.PostService;
+import com.back.boundedContext.member.domain.Member;
+import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.member.app.MemberService;
+import com.back.boundedContext.post.app.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -79,23 +79,23 @@ public class DataInit {
         Post post4 = postService.findById(4);
 
         if(!post1.hasComments()) {
-            postService.addComment(post1, user1Member, "댓글1");
-            postService.addComment(post1, user2Member, "댓글2");
-            postService.addComment(post1, user3Member, "댓글3");
+            post1.addComment(user1Member, "댓글1");
+            post1.addComment(user2Member, "댓글2");
+            post1.addComment(user3Member, "댓글3");
         }
 
         if(!post2.hasComments()) {
-            postService.addComment(post2, user2Member, "댓글4");
-            postService.addComment(post2, user2Member, "댓글5");
+            post2.addComment(user2Member, "댓글4");
+            post2.addComment(user2Member, "댓글5");
         }
 
         if(!post3.hasComments()) {
-            postService.addComment(post3, user3Member, "댓글6");
-            postService.addComment(post3, user1Member, "댓글7");
+            post3.addComment(user3Member, "댓글6");
+            post3.addComment(user1Member, "댓글7");
         }
 
         if(!post4.hasComments()) {
-            postService.addComment(post4, user1Member, "댓글8");
+            post4.addComment(user1Member, "댓글8");
         }
 
     }
