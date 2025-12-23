@@ -36,7 +36,7 @@ public class Post extends BaseIdAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
-
+        author.addActionScore(1);
         return postComment;
     }
 

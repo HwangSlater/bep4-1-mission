@@ -49,9 +49,9 @@ public class DataInit {
 
     @Transactional
     public void makeBasePosts() {
-        Member user1Member = memberService.findByUsername("user1");
-        Member user2Member = memberService.findByUsername("user2");
-        Member user3Member = memberService.findByUsername("user3");
+        Member user1Member = memberService.findByUsername("user1").get();
+        Member user2Member = memberService.findByUsername("user2").get();
+        Member user3Member = memberService.findByUsername("user3").get();
 
         if(postService.count() > 0) return;
 
@@ -69,9 +69,9 @@ public class DataInit {
 
     @Transactional
     public void makeBasePostComment() {
-        Member user1Member = memberService.findByUsername("user1");
-        Member user2Member = memberService.findByUsername("user2");
-        Member user3Member = memberService.findByUsername("user3");
+        Member user1Member = memberService.findByUsername("user1").get();
+        Member user2Member = memberService.findByUsername("user2").get();
+        Member user3Member = memberService.findByUsername("user3").get();
 
         Post post1 = postService.findById(1);
         Post post2 = postService.findById(2);
