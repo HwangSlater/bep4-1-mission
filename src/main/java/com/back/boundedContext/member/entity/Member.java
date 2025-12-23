@@ -3,9 +3,11 @@ package com.back.boundedContext.member.entity;
 import com.back.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Member extends BaseIdAndTime {
     @Column(unique = true)
@@ -13,20 +15,20 @@ public class Member extends BaseIdAndTime {
     private String password;
     private String nickname;
     @Column(nullable = false)
-    private int actionScore;
+    private int activityScore;
 
-    public Member(String username, String password, String nickname, int actionScore) {
+    public Member(String username, String password, String nickname, int activityScore) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.actionScore = actionScore;
+        this.activityScore = activityScore;
     }
 
     public Member(String username, String password, String nickname) {
         this(username, password, nickname, 0);
     }
 
-    public void addActionScore(int score) {
-        actionScore += score;
+    public void increaseActivityScore(int score) {
+        activityScore += score;
     }
 }

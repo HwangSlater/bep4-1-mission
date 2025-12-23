@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = LAZY)
@@ -33,12 +35,10 @@ public class Post extends BaseIdAndTime {
         this.content = content;
     }
 
-    public PostComment addComment(Member author, String content) {
-        PostComment postComment = new PostComment(this, author, content);
+    public PostComment addComment(PostComment comment) {
+        comments.add(comment);
 
-        comments.add(postComment);
-        author.addActionScore(1);
-        return postComment;
+        return comment;
     }
 
     public boolean hasComments() {

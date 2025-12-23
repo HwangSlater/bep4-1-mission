@@ -79,23 +79,23 @@ public class DataInit {
         Post post4 = postService.findById(4);
 
         if(!post1.hasComments()) {
-            post1.addComment(user1Member, "댓글1");
-            post1.addComment(user2Member, "댓글2");
-            post1.addComment(user3Member, "댓글3");
+            postService.addComment(post1, user1Member, "댓글1");
+            postService.addComment(post1, user2Member, "댓글2");
+            postService.addComment(post1, user3Member, "댓글3");
         }
 
         if(!post2.hasComments()) {
-            post2.addComment(user2Member, "댓글4");
-            post2.addComment(user2Member, "댓글5");
+            postService.addComment(post2, user2Member, "댓글4");
+            postService.addComment(post2, user2Member, "댓글5");
         }
 
         if(!post3.hasComments()) {
-            post3.addComment(user3Member, "댓글6");
-            post3.addComment(user1Member, "댓글7");
+            postService.addComment(post3, user3Member, "댓글6");
+            postService.addComment(post3, user1Member, "댓글7");
         }
 
         if(!post4.hasComments()) {
-            post4.addComment(user1Member, "댓글8");
+            postService.addComment(post4, user1Member, "댓글8");
         }
 
     }
