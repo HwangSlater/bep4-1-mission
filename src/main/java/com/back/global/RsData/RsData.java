@@ -13,4 +13,12 @@ public class RsData<T> {
     public RsData(String resultCode, String msg) {
         this(resultCode, msg, null);
     }
+
+    @Override
+    public String toString() {
+        return "RsData{" +
+                "resultCode='" + resultCode + '\'' +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
 }
