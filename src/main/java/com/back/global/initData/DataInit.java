@@ -2,7 +2,7 @@ package com.back.global.initData;
 
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.post.app.PostService;
+import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -18,12 +18,12 @@ import java.util.stream.IntStream;
 public class DataInit {
     private final DataInit self;
     private final MemberFacade memberFacade;
-    private final PostService postService;
+    private final PostFacade postFacade;
 
-    public DataInit(@Lazy DataInit self, MemberFacade memberJoinUseCase, PostService postService) {
+    public DataInit(@Lazy DataInit self, MemberFacade memberJoinUseCase, PostFacade postFacade) {
         this.self = self;
         this.memberFacade = memberJoinUseCase;
-        this.postService = postService;
+        this.postFacade = postFacade;
     }
 
     @Bean
@@ -53,17 +53,17 @@ public class DataInit {
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        if(postService.count() > 0) return;
+        if(postFacade.count() > 0) return;
 
         IntStream.range(0, 3).forEach(i -> {
-            postService.write(user1Member, "user1Member - testPost" + i, "testContent" + i);
+            postFacade.write(user1Member, "user1Member - testPost" + i, "testContent" + i);
 
             if(i<2) {
-                postService.write(user2Member, "user2Member - testPost" + i, "testContent" + i);
+                postFacade.write(user2Member, "user2Member - testPost" + i, "testContent" + i);
             }
         });
 
-        postService.write(user3Member, "user3Member - testPost", "testContent");
+        postFacade.write(user3Member, "user3Member - testPost", "testContent");
     }
 
 
@@ -73,10 +73,10 @@ public class DataInit {
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        Post post1 = postService.findById(1);
-        Post post2 = postService.findById(2);
-        Post post3 = postService.findById(3);
-        Post post4 = postService.findById(4);
+        Post post1 = postFacade.findById(1);
+        Post post2 = postFacade.findById(2);
+        Post post3 = postFacade.findById(3);
+        Post post4 = postFacade.findById(4);
 
         if(!post1.hasComments()) {
             post1.addComment(user1Member, "댓글1");
