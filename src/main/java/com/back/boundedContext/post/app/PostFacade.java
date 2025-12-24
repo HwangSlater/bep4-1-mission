@@ -2,18 +2,22 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
+import com.back.boundedContext.post.out.PostMemberRepository;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.RsData.RsData;
-import com.back.global.exception.DomainException;
+import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class PostFacade {
     private final PostRepository postRepository;
+    private final PostMemberRepository postMemberRepository;
     private final PostWriteUseCase postWriteUseCase;
 
     @Transactional(readOnly = true)
@@ -21,14 +25,26 @@ public class PostFacade {
         return postRepository.count();
     }
 
+    @Transactional
     public RsData<Post> write(Member author, String title, String content) {
         return postWriteUseCase.write(author, title, content);
     }
 
     @Transactional(readOnly = true)
-    public Post findById(int id) {
-        return postRepository.findById(id).orElseThrow(
-                () -> new DomainException("404", "존재하지 않는 post 입니다.")
+    public Optional<Post> findById(int id) {
+        return postRepository.findById(id);
+    }
+
+    public PostMember syncMember(MemberDto member) {
+        PostMember postMember = new PostMember(
+                member.getId(),
+                member.getCreateDate(),
+                member.getModifyDate(),
+                member.getUsername(),
+                "",
+                member.getNickname()
         );
+
+        return postMemberRepository.save(postMember);
     }
 }

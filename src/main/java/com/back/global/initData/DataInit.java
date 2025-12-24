@@ -73,10 +73,10 @@ public class DataInit {
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        Post post1 = postFacade.findById(1);
-        Post post2 = postFacade.findById(2);
-        Post post3 = postFacade.findById(3);
-        Post post4 = postFacade.findById(4);
+        Post post1 = postFacade.findById(1).get();
+        Post post2 = postFacade.findById(2).get();
+        Post post3 = postFacade.findById(3).get();
+        Post post4 = postFacade.findById(4).get();
 
         if(!post1.hasComments()) {
             post1.addComment(user1Member, "댓글1");

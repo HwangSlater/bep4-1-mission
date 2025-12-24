@@ -5,7 +5,7 @@ import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.RsData.RsData;
 import com.back.global.eventPublisher.EventPublisher;
-import com.back.shared.dto.PostDto;
+import com.back.shared.post.dto.PostDto;
 import com.back.shared.member.MemberApiClient;
 import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
