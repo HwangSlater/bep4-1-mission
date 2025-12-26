@@ -4,6 +4,7 @@ import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -49,9 +50,9 @@ public class DataInit {
 
     @Transactional
     public void makeBasePosts() {
-        Member user1Member = memberFacade.findByUsername("user1").get();
-        Member user2Member = memberFacade.findByUsername("user2").get();
-        Member user3Member = memberFacade.findByUsername("user3").get();
+        PostMember user1Member = postFacade.findByUsername("user1").get();
+        PostMember user2Member = postFacade.findByUsername("user2").get();
+        PostMember user3Member = postFacade.findByUsername("user3").get();
 
         if(postFacade.count() > 0) return;
 
