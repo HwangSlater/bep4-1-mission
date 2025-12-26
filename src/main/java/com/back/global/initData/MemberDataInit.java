@@ -21,7 +21,7 @@ public class MemberDataInit {
         this.memberFacade = memberJoinUseCase;
     }
 
-    @Bean
+    @Bean(name = "baseInitDataRunner1")
     @Order(1)
     public ApplicationRunner baseInitDataRunner() {
         return args -> {

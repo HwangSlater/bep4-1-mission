@@ -28,7 +28,7 @@ public class PostDataInit {
         this.postFacade = postFacade;
     }
 
-    @Bean
+    @Bean(name = "baseInitDataRunner2")
     @Order(2)
     public ApplicationRunner baseInitDataRunner() {
         return args -> {
