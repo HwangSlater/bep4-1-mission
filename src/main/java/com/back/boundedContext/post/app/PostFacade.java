@@ -37,12 +37,13 @@ public class PostFacade {
 
     public PostMember syncMember(MemberDto member) {
         PostMember postMember = new PostMember(
-                member.getId(),
-                member.getCreateDate(),
-                member.getModifyDate(),
-                member.getUsername(),
+                member.id(),
+                member.createDate(),
+                member.modifyDate(),
+                member.username(),
                 "",
-                member.getNickname()
+                member.nickname(),
+                member.activityScore()
         );
 
         return postMemberRepository.save(postMember);
