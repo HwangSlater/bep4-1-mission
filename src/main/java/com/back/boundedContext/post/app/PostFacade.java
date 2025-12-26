@@ -30,7 +30,7 @@ public class PostFacade {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Post> findById(int id) {
+    public Optional<Post> findWalletById(int id) {
         return postRepository.findById(id);
     }
 
@@ -50,7 +50,7 @@ public class PostFacade {
     }
 
     @Transactional(readOnly = true)
-    public Optional<PostMember> findByUsername(String username) {
+    public Optional<PostMember> findMemberByUsername(String username) {
         return postMemberRepository.findByUsername(username);
     }
 }

@@ -1,7 +1,7 @@
-package com.back.boundedContext.cache.in;
+package com.back.boundedContext.cash.in;
 
-import com.back.boundedContext.cache.app.CashFacade;
-import com.back.boundedContext.cache.domain.CashMember;
+import com.back.boundedContext.cash.app.CashFacade;
+import com.back.boundedContext.cash.domain.CashMember;
 import com.back.shared.member.event.MemberJoinedEvent;
 import com.back.shared.member.event.MemberModifiedEvent;
 import lombok.RequiredArgsConstructor;

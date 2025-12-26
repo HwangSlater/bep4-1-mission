@@ -5,7 +5,6 @@ import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.IntStream;
 
 @Configuration
-@Slf4j
 public class PostDataInit {
     private final PostDataInit self;
     private final MemberFacade memberFacade;
@@ -28,9 +26,9 @@ public class PostDataInit {
         this.postFacade = postFacade;
     }
 
-    @Bean(name = "baseInitDataRunner2")
+    @Bean
     @Order(2)
-    public ApplicationRunner baseInitDataRunner() {
+    public ApplicationRunner postInitDataRunner() {
         return args -> {
             self.makeBasePosts();
             self.makeBasePostComment();
@@ -39,9 +37,9 @@ public class PostDataInit {
 
     @Transactional
     public void makeBasePosts() {
-        PostMember user1Member = postFacade.findByUsername("user1").get();
-        PostMember user2Member = postFacade.findByUsername("user2").get();
-        PostMember user3Member = postFacade.findByUsername("user3").get();
+        PostMember user1Member = postFacade.findMemberByUsername("user1").get();
+        PostMember user2Member = postFacade.findMemberByUsername("user2").get();
+        PostMember user3Member = postFacade.findMemberByUsername("user3").get();
 
         if(postFacade.count() > 0) return;
 
@@ -63,10 +61,10 @@ public class PostDataInit {
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        Post post1 = postFacade.findById(1).get();
-        Post post2 = postFacade.findById(2).get();
-        Post post3 = postFacade.findById(3).get();
-        Post post4 = postFacade.findById(4).get();
+        Post post1 = postFacade.findWalletById(1).get();
+        Post post2 = postFacade.findWalletById(2).get();
+        Post post3 = postFacade.findWalletById(3).get();
+        Post post4 = postFacade.findWalletById(4).get();
 
         if(!post1.hasComments()) {
             post1.addComment(user1Member, "댓글1");

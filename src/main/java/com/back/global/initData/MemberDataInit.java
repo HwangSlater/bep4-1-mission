@@ -2,7 +2,6 @@ package com.back.global.initData;
 
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +10,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
-@Slf4j
 public class MemberDataInit {
     private final MemberDataInit self;
     private final MemberFacade memberFacade;
@@ -21,9 +19,9 @@ public class MemberDataInit {
         this.memberFacade = memberJoinUseCase;
     }
 
-    @Bean(name = "baseInitDataRunner1")
+    @Bean
     @Order(1)
-    public ApplicationRunner baseInitDataRunner() {
+    public ApplicationRunner memberInitDataRunner() {
         return args -> {
             self.makeBaseMembers();
         };
