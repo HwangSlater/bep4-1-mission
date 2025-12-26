@@ -10,42 +10,31 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.IntStream;
 
 @Configuration
 @Slf4j
-public class DataInit {
-    private final DataInit self;
+public class PostDataInit {
+    private final PostDataInit self;
     private final MemberFacade memberFacade;
     private final PostFacade postFacade;
 
-    public DataInit(@Lazy DataInit self, MemberFacade memberJoinUseCase, PostFacade postFacade) {
+    public PostDataInit(@Lazy PostDataInit self, MemberFacade memberJoinUseCase, PostFacade postFacade) {
         this.self = self;
         this.memberFacade = memberJoinUseCase;
         this.postFacade = postFacade;
     }
 
     @Bean
+    @Order(2)
     public ApplicationRunner baseInitDataRunner() {
         return args -> {
-            self.makeBaseMembers();
             self.makeBasePosts();
             self.makeBasePostComment();
         };
-    }
-
-    @Transactional
-    public void makeBaseMembers() {
-        if (memberFacade.count() > 0) return;
-
-        Member systemMember = memberFacade.join("system", "1234", "시스템").getData();
-        Member holdingMember = memberFacade.join("holding", "1234", "홀딩").getData();
-        Member adminMember = memberFacade.join("admin", "1234", "관리자").getData();
-        Member user1Member = memberFacade.join("user1", "1234", "유저1").getData();
-        Member user2Member = memberFacade.join("user2", "1234", "유저2").getData();
-        Member user3Member = memberFacade.join("user3", "1234", "유저3").getData();
     }
 
     @Transactional
