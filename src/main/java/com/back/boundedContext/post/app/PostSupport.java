@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -22,12 +23,22 @@ public class PostSupport {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Post> findWalletById(int id) {
+    public Optional<Post> findPostById(int id) {
         return postRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
     public Optional<PostMember> findMemberByUsername(String username) {
         return postMemberRepository.findByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Post> findAll() {
+        return postRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Post> findByOrderByIdDesc() {
+        return postRepository.findByOrderByIdDesc();
     }
 }

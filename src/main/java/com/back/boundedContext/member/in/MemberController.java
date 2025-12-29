@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/api/v1")
+@RequestMapping("/member/api/v1/members")
 public class MemberController {
     private final MemberFacade memberFacade;
 
-    @GetMapping("/members/randomSecureTip")
+    @GetMapping("/randomSecureTip")
     public String getRandomSecureTip() {
         return memberFacade.getRandomSecureTip();
     }
