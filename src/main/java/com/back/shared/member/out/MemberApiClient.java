@@ -1,4 +1,4 @@
-package com.back.shared.member;
+package com.back.shared.member.out;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;

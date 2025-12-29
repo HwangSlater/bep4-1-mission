@@ -13,17 +13,14 @@ import java.util.Optional;
 public class MemberSupport {
     private final MemberRepository memberRepository;
 
-    @Transactional(readOnly = true)
     public long count() {
         return memberRepository.count();
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findById(int id) {
         return memberRepository.findById(id);
     }
