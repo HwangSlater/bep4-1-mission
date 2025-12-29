@@ -1,4 +1,4 @@
-package com.back.global.initData;
+package com.back.boundedContext.cash.in;
 
 import com.back.boundedContext.cash.app.CashFacade;
 import com.back.boundedContext.cash.domain.CashLog;

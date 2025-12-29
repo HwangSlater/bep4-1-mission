@@ -1,22 +1,13 @@
-package com.back.global.RsData;
+package com.back.global.rsData;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@AllArgsConstructor
-@Getter
-public class RsData<T> {
-    private final String resultCode;
-    private final String msg;
-    private final T data;
-
+public record RsData<T>(String resultCode, String msg, T data) {
     public RsData(String resultCode, String msg) {
         this(resultCode, msg, null);
     }
 
     @Override
     public String toString() {
-        return "RsData{" +
+        return "rsData{" +
                 "resultCode='" + resultCode + '\'' +
                 ", msg='" + msg + '\'' +
                 '}';

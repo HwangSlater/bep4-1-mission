@@ -1,4 +1,4 @@
-package com.back.global.initData;
+package com.back.boundedContext.post.in;
 
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;

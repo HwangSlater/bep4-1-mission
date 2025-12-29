@@ -1,4 +1,4 @@
-package com.back.global.initData;
+package com.back.boundedContext.member.in;
 
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
@@ -31,11 +31,11 @@ public class MemberDataInit {
     public void makeBaseMembers() {
         if (memberFacade.count() > 0) return;
 
-        Member systemMember = memberFacade.join("system", "1234", "시스템").getData();
-        Member holdingMember = memberFacade.join("holding", "1234", "홀딩").getData();
-        Member adminMember = memberFacade.join("admin", "1234", "관리자").getData();
-        Member user1Member = memberFacade.join("user1", "1234", "유저1").getData();
-        Member user2Member = memberFacade.join("user2", "1234", "유저2").getData();
-        Member user3Member = memberFacade.join("user3", "1234", "유저3").getData();
+        Member systemMember = memberFacade.join("system", "1234", "시스템").data();
+        Member holdingMember = memberFacade.join("holding", "1234", "홀딩").data();
+        Member adminMember = memberFacade.join("admin", "1234", "관리자").data();
+        Member user1Member = memberFacade.join("user1", "1234", "유저1").data();
+        Member user2Member = memberFacade.join("user2", "1234", "유저2").data();
+        Member user3Member = memberFacade.join("user3", "1234", "유저3").data();
     }
 }
