@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/cash/api/v1/wallets")
+@RequestMapping("/api/v1/wallets/cash")
 @RequiredArgsConstructor
 public class WalletController {
     private final CashFacade cashFacade;

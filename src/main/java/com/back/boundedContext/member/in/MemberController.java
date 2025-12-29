@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/api/v1/members")
+@RequestMapping("/api/v1/member/members")
 public class MemberController {
     private final MemberFacade memberFacade;
 
