@@ -1,4 +1,4 @@
-package com.back.shared.cache.dto;
+package com.back.shared.cash.dto;
 
 import com.back.boundedContext.cash.domain.CashMember;
 
