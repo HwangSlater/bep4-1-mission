@@ -69,7 +69,7 @@ public class Order extends BaseIdAndTime {
         requestPaymentDate = LocalDateTime.now();
 
         publishEvent(
-                new MarketOrderPaymentRequestedEvent(new OrderDto(this), pgPaymentAmount)
+                new MarketOrderPaymentRequestedEvent(toDto(), pgPaymentAmount)
         );
     }
 
@@ -83,5 +83,19 @@ public class Order extends BaseIdAndTime {
 
     public boolean isPaymentInProgress() {
         return requestPaymentDate != null && paymentDate != null && cancelDate != null;
+    }
+
+    public OrderDto toDto() {
+        return new OrderDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                getBuyer().getId(),
+                getBuyer().getNickname(),
+                getPrice(),
+                getSalePrice(),
+                getRequestPaymentDate(),
+                getPaymentDate()
+        );
     }
 }

@@ -34,7 +34,7 @@ public class CashSyncWalletUseCase {
         if (isNew) {
             eventPublisher.publish(
                     new CashMemberCreatedEvent(
-                            new CashMemberDto(cashMember)
+                            cashMember.toDto()
                     )
             );
         }

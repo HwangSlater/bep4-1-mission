@@ -3,6 +3,7 @@ package com.back.boundedContext.post.domain;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.global.jpa.entity.BaseIdAndTime;
+import com.back.shared.post.dto.PostCommentDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -28,5 +29,16 @@ public class PostComment extends BaseIdAndTime {
         this.post = post;
         this.author = author;
         this.content = content;
+    }
+
+    public PostCommentDto toDto() {
+        return new PostCommentDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                getAuthor().getId(),
+                getAuthor().getNickname(),
+                getContent()
+        );
     }
 }
