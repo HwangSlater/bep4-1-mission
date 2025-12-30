@@ -1,6 +1,7 @@
 package com.back.shared.cash.event;
 
 import com.back.shared.market.dto.OrderDto;
+import com.back.standard.resultType.ResultType;
 
 public record CashOrderPaymentFailedEvent(
         String resultCode,
@@ -8,4 +9,4 @@ public record CashOrderPaymentFailedEvent(
         OrderDto order,
         long pgPaymentAmount,
         long shortfallAmount
-) {}
+) implements ResultType {}
