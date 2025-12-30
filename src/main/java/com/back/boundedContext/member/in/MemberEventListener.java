@@ -19,7 +19,7 @@ public class MemberEventListener {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(PostCreatedEvent event) {
-        Member member = memberFacade.findById(event.getPostDto().authorId()).get();
+        Member member = memberFacade.findById(event.postDto().authorId()).get();
 
         member.increaseActivityScore(3);
     }
@@ -27,7 +27,7 @@ public class MemberEventListener {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void handle(PostCommentCreatedEvent event) {
-        Member member = memberFacade.findById(event.getPostCommentDto().authorId()).get();
+        Member member = memberFacade.findById(event.postCommentDto().authorId()).get();
 
         member.increaseActivityScore(1);
     }

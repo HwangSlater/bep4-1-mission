@@ -33,7 +33,7 @@ public class CashEventListener {
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(CashMemberCreatedEvent event) {
-        cashFacade.createWallet(event.getCashMemberDto());
+        cashFacade.createWallet(event.cashMemberDto());
     }
 
     @TransactionalEventListener(phase = AFTER_COMMIT)
