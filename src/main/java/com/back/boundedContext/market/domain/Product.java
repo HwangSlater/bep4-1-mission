@@ -12,9 +12,9 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "MARKET_PRODUCT")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Product extends BaseIdAndTime {
     @ManyToOne(fetch = LAZY)
     private MarketMember seller;

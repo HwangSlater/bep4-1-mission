@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: back
+  config:
+    import: optional:file:.env[.properties]
   profiles:
     active: dev
   output:
@@ -22,8 +24,6 @@ spring:
         highlight_sql: true
         use_sql_comments: true
         default_batch_fetch_size: 100
-  config:
-    import: optional:file:C:/Users/pc/IdeaProjects/bep4-1-mission/.env.properties
   batch:
     job:
       enabled: false
@@ -36,14 +36,14 @@ logging:
 custom:
   global:
     internalBackUrl: http://localhost:${server.port:8080}
-  market:
-    product:
-      payoutRate: 90
-    toss:
-      payments:
-        secretKey: ${TOSS_PAYMENTS_SECRET_KEY}
   member:
     password:
       changeDays: 90
+  market:
+    toss:
+      payments:
+        secretKey: ${TOSS_PAYMENTS_SECRET_KEY:}
+    product:
+      payoutRate: 90
   payout:
     readyWaitingDays: 14

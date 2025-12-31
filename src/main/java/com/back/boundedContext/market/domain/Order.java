@@ -28,9 +28,9 @@ public class Order extends BaseIdAndTime {
     private MarketMember buyer;
     private long price;
     private long salePrice;
+    private LocalDateTime cancelDate;
     private LocalDateTime requestPaymentDate;
     private LocalDateTime paymentDate;
-    private LocalDateTime cancelDate;
 
     @OneToMany(mappedBy = "order", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
@@ -58,6 +58,7 @@ public class Order extends BaseIdAndTime {
         salePrice += product.getSalePrice();
     }
 
+
     public void completePayment() {
         paymentDate = LocalDateTime.now();
 
@@ -76,7 +77,10 @@ public class Order extends BaseIdAndTime {
         requestPaymentDate = LocalDateTime.now();
 
         publishEvent(
-                new MarketOrderPaymentRequestedEvent(toDto(), pgPaymentAmount)
+                new MarketOrderPaymentRequestedEvent(
+                        toDto(),
+                        pgPaymentAmount
+                )
         );
     }
 
@@ -89,7 +93,7 @@ public class Order extends BaseIdAndTime {
     }
 
     public boolean isPaymentInProgress() {
-        return requestPaymentDate != null && paymentDate != null && cancelDate != null;
+        return requestPaymentDate != null && paymentDate == null && cancelDate == null;
     }
 
     public OrderDto toDto() {
@@ -97,12 +101,12 @@ public class Order extends BaseIdAndTime {
                 getId(),
                 getCreateDate(),
                 getModifyDate(),
-                getBuyer().getId(),
-                getBuyer().getNickname(),
-                getPrice(),
-                getSalePrice(),
-                getRequestPaymentDate(),
-                getPaymentDate()
+                buyer.getId(),
+                buyer.getNickname(),
+                price,
+                salePrice,
+                requestPaymentDate,
+                paymentDate
         );
     }
 }
