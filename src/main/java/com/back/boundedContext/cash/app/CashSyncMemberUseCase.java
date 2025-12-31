@@ -3,24 +3,21 @@ package com.back.boundedContext.cash.app;
 import com.back.boundedContext.cash.domain.CashMember;
 import com.back.boundedContext.cash.out.CashMemberRepository;
 import com.back.global.eventPublisher.EventPublisher;
-import com.back.shared.cash.dto.CashMemberDto;
 import com.back.shared.cash.event.CashMemberCreatedEvent;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CashSyncWalletUseCase {
+public class CashSyncMemberUseCase {
     private final CashMemberRepository cashMemberRepository;
     private final EventPublisher eventPublisher;
 
-    @Transactional
     public CashMember syncMember(MemberDto member) {
         boolean isNew = !cashMemberRepository.existsById(member.id());
 
-        CashMember cashMember = cashMemberRepository.save(
+        CashMember _member =  cashMemberRepository.save(
                 new CashMember(
                         member.id(),
                         member.createDate(),
@@ -29,16 +26,17 @@ public class CashSyncWalletUseCase {
                         "",
                         member.nickname(),
                         member.activityScore()
-        ));
+                )
+        );
 
         if (isNew) {
             eventPublisher.publish(
                     new CashMemberCreatedEvent(
-                            cashMember.toDto()
+                            _member.toDto()
                     )
             );
         }
 
-        return cashMember;
+        return _member;
     }
 }

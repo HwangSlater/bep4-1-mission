@@ -10,15 +10,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "MEMBER_CASH_MEMBER")
-@Getter
+@Table(name = "CASH_MEMBER")
 @NoArgsConstructor
+@Getter
 public class CashMember extends ReplicaMember {
-
-    public CashMember(int id, LocalDateTime createDate, LocalDateTime modifyDate
-            , String username, String password, String nickname, int activityScore) {
+    public  CashMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
         super(id, createDate, modifyDate, username, password, nickname, activityScore);
     }
+
 
     public CashMemberDto toDto() {
         return new CashMemberDto(

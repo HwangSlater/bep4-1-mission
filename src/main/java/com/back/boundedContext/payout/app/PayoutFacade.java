@@ -17,9 +17,9 @@ public class PayoutFacade {
     private final PayoutSyncMemberUseCase payoutSyncMemberUseCase;
     private final PayoutCreatePayoutUseCase payoutCreatePayoutUseCase;
     private final PayoutAddPayoutCandidateItemsUseCase payoutAddPayoutCandidateItemsUseCase;
+    private final PayoutSupport payoutSupport;
     private final PayoutCollectPayoutItemsMoreUseCase payoutCollectPayoutItemsMoreUseCase;
     private final PayoutCompletePayoutsMoreUseCase payoutCompletePayoutsMoreUseCase;
-    private final PayoutSupport payoutSupport;
 
     @Transactional
     public void syncMember(MemberDto member) {
@@ -43,7 +43,8 @@ public class PayoutFacade {
 
     @Transactional(readOnly = true)
     public List<PayoutCandidateItem> findPayoutCandidateItems() {
-        return payoutSupport.findPayoutCandidateItems();
+        return payoutSupport
+                .findPayoutCandidateItems();
     }
 
     @Transactional

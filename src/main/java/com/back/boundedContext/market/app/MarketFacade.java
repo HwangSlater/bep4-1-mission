@@ -16,8 +16,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MarketFacade {
-    private final MarketSupport marketSupport;
     private final MarketSyncMemberUseCase marketSyncMemberUseCase;
+    private final MarketSupport marketSupport;
     private final MarketCreateProductUseCase marketCreateProductUseCase;
     private final MarketCreateCartUseCase marketCreateCartUseCase;
     private final MarketCreateOrderUseCase marketCreateOrderUseCase;
@@ -29,11 +29,6 @@ public class MarketFacade {
         return marketSyncMemberUseCase.syncMember(member);
     }
 
-    @Transactional(readOnly = true)
-    public long productsCount() {
-        return marketSupport.countProducts();
-    }
-
     @Transactional
     public Product createProduct(
             MarketMember seller,
@@ -41,8 +36,8 @@ public class MarketFacade {
             int sourceId,
             String name,
             String description,
-            long price,
-            long salePrice
+            int price,
+            int salePrice
     ) {
         return marketCreateProductUseCase.createProduct(
                 seller,
@@ -56,13 +51,13 @@ public class MarketFacade {
     }
 
     @Transactional(readOnly = true)
-    public Optional<MarketMember> findMemberByUsername(String username) {
-        return marketSupport.findMemberByUsername(username);
+    public long productsCount() {
+        return marketSupport.countProducts();
     }
 
-    @Transactional
-    public RsData<Cart> createCart(MarketMemberDto buyer) {
-        return marketCreateCartUseCase.createCart(buyer);
+    @Transactional(readOnly = true)
+    public Optional<MarketMember> findMemberByUsername(String username) {
+        return marketSupport.findMemberByUsername(username);
     }
 
     @Transactional(readOnly = true)
@@ -73,6 +68,11 @@ public class MarketFacade {
     @Transactional(readOnly = true)
     public Optional<Product> findProductById(int id) {
         return marketSupport.findProductById(id);
+    }
+
+    @Transactional
+    public RsData<Cart> createCart(MarketMemberDto buyer) {
+        return marketCreateCartUseCase.createCart(buyer);
     }
 
     @Transactional(readOnly = true)
@@ -86,8 +86,8 @@ public class MarketFacade {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Order> findOrderById(int orderId) {
-        return marketSupport.findOrderById(orderId);
+    public Optional<Order> findOrderById(int id) {
+        return marketSupport.findOrderById(id);
     }
 
     @Transactional
@@ -96,12 +96,12 @@ public class MarketFacade {
     }
 
     @Transactional
-    public void completePayment(int orderId) {
+    public void completeOrderPayment(int orderId) {
         marketCompleteOrderPaymentUseCase.completePayment(orderId);
     }
 
     @Transactional
-    public void cancelRequestPayment(int orderId) {
+    public void cancelOrderRequestPayment(int orderId) {
         marketCancelOrderRequestPaymentUseCase.cancelRequestPayment(orderId);
     }
 }

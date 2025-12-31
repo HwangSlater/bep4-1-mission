@@ -47,7 +47,5 @@ public class PayoutEventListener {
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(PayoutCompletedEvent event) {
         payoutFacade.createPayout(event.payout().payeeId());
-
-
     }
 }

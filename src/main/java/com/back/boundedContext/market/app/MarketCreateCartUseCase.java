@@ -8,7 +8,6 @@ import com.back.global.rsData.RsData;
 import com.back.shared.market.dto.MarketMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +15,6 @@ public class MarketCreateCartUseCase {
     private final MarketMemberRepository marketMemberRepository;
     private final CartRepository cartRepository;
 
-    @Transactional
     public RsData<Cart> createCart(MarketMemberDto buyer) {
         MarketMember _buyer = marketMemberRepository.getReferenceById(buyer.id());
 

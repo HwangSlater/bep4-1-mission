@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CashFacade {
-    private final CashSyncWalletUseCase cashSyncWalletUseCase;
+    private final CashSyncMemberUseCase cashSyncMemberUseCase;
     private final CashCreateWalletUseCase cashCreateWalletUseCase;
     private final CashCompleteOrderPaymentUseCase cashCompleteOrderPaymentUseCase;
-    private final CashCompletePayoutUseCase cashCompletePayoutUseCase;
     private final CashSupport cashSupport;
+    private final CashCompletePayoutUseCase cashCompletePayoutUseCase;
 
     @Transactional
     public CashMember syncMember(MemberDto member) {
-        return cashSyncWalletUseCase.syncMember(member);
+        return cashSyncMemberUseCase.syncMember(member);
     }
 
     @Transactional
@@ -37,20 +37,18 @@ public class CashFacade {
         return cashSupport.findMemberByUsername(username);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Wallet> findWalletByHolder(CashMember holder) {
         return cashSupport.findWalletByHolder(holder);
     }
 
-    @Transactional
-    public void completeOrderPayment(OrderDto orderDto, long pgPaymentAmount) {
-        cashCompleteOrderPaymentUseCase.completeOrderPayment(orderDto, pgPaymentAmount);
+    public void completeOrderPayment(OrderDto order, long pgPaymentAmount) {
+        cashCompleteOrderPaymentUseCase.completeOrderPayment(order, pgPaymentAmount);
     }
-
     @Transactional(readOnly = true)
     public Optional<Wallet> findWalletByHolderId(int holderId) {
         return cashSupport.findWalletByHolderId(holderId);
     }
+
 
     @Transactional
     public void completePayout(PayoutDto payout) {

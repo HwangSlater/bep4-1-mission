@@ -1,5 +1,6 @@
 package com.back.boundedContext.market.app;
 
+
 import com.back.boundedContext.market.domain.Cart;
 import com.back.boundedContext.market.domain.MarketMember;
 import com.back.boundedContext.market.domain.Order;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
 
 @Component
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class MarketSupport {
         return orderRepository.count();
     }
 
-    public Optional<Order> findOrderById(int orderId) {
-        return orderRepository.findById(orderId);
+    public Optional<Order> findOrderById(int id) {
+        return orderRepository.findById(id);
     }
 }

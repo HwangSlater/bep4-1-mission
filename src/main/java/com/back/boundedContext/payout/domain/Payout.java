@@ -61,14 +61,14 @@ public class Payout extends BaseIdAndTime {
 
     public PayoutDto toDto() {
         return new PayoutDto(
-        this.getId(),
-        this.getCreateDate(),
-        this.getModifyDate(),
-        this.getPayee().getId(),
-        this.getPayee().getNickname(),
-        this.payoutDate,
-        this.amount,
-        this.getPayee().isSystem()
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                payee.getId(),
+                payee.getNickname(),
+                payoutDate,
+                amount,
+                payee.isSystem()
         );
     }
 }

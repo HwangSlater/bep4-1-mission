@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class PayoutMember extends ReplicaMember {
-    public PayoutMember(int id, LocalDateTime createDate, LocalDateTime modifyDate
-            , String username, String password, String nickname, int activityScore) {
+    public PayoutMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
         super(id, createDate, modifyDate, username, password, nickname, activityScore);
     }
 
