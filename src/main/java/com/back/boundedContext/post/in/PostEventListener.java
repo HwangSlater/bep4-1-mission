@@ -1,30 +1,58 @@
 package com.back.boundedContext.post.in;
 
 import com.back.boundedContext.post.app.PostFacade;
+import com.back.global.processedEvent.app.ProcessedEventFacade;
+import com.back.global.serviceName.ServiceName;
 import com.back.shared.member.event.MemberJoinedEvent;
 import com.back.shared.member.event.MemberModifiedEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
-
-import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
-import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 @Component
 @RequiredArgsConstructor
 public class PostEventListener {
     private final PostFacade postFacade;
+    private final ProcessedEventFacade  processedEventFacade;
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MemberJoinedEvent event) {
-        postFacade.syncMember(event.member());
+    @KafkaListener(
+            topics = "MemberJoinedEvent",
+            groupId = "post-service"
+    )
+    @Transactional
+    public void handleMemberJoined(MemberJoinedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        postFacade.syncMember(event.getMember());
+
+        processedEventFacade.createProcessedEvent(
+                event.getEventId(),
+                ServiceName.POST_SERVICE.value(),
+                event.getProducerServiceName(),
+                event.getEventType()
+        );
     }
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MemberModifiedEvent event) {
-        postFacade.syncMember(event.member());
+    @KafkaListener(
+            topics = "MemberModifiedEvent",
+            groupId = "post-service"
+    )
+    @Transactional
+    public void handleMemberModified(MemberModifiedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        postFacade.syncMember(event.getMember());
+
+        processedEventFacade.createProcessedEvent(
+                        event.getEventId(),
+                        ServiceName.POST_SERVICE.value(),
+                        event.getProducerServiceName(),
+                        event.getEventType()
+        );
     }
 }

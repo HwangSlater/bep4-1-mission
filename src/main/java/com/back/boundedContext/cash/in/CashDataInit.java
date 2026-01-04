@@ -34,7 +34,7 @@ public class CashDataInit {
     }
 
     @Transactional
-    public void makeBaseCredits() {
+    public void makeBaseCredits() throws Exception {
         CashMember user1Member = cashFacade.findMemberByUsername("user1").get();
         CashMember user2Member = cashFacade.findMemberByUsername("user2").get();
 
@@ -51,5 +51,7 @@ public class CashDataInit {
         if (user2Wallet.hasBalance()) return;
 
         user2Wallet.credit(150_000, CashLog.EventType.충전__무통장입금);
+
+        Thread.sleep(2000);
     }
 }

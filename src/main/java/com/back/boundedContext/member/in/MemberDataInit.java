@@ -28,7 +28,7 @@ public class MemberDataInit {
     }
 
     @Transactional
-    public void makeBaseMembers() {
+    public void makeBaseMembers() throws Exception {
         if (memberFacade.count() > 0) return;
 
         Member systemMember = memberFacade.join("system", "1234", "시스템").data();
@@ -37,5 +37,7 @@ public class MemberDataInit {
         Member user1Member = memberFacade.join("user1", "1234", "유저1").data();
         Member user2Member = memberFacade.join("user2", "1234", "유저2").data();
         Member user3Member = memberFacade.join("user3", "1234", "유저3").data();
+
+        Thread.sleep(5000);
     }
 }

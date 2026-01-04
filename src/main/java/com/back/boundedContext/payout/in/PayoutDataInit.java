@@ -67,16 +67,20 @@ public class PayoutDataInit {
     }
 
     @Transactional
-    public void collectPayoutItemsMore() {
+    public void collectPayoutItemsMore() throws Exception {
         payoutFacade.collectPayoutItemsMore(2);
+
+        Thread.sleep(2000);
     }
 
     @Transactional
-    public void completePayoutsMore() {
+    public void completePayoutsMore() throws Exception {
         payoutFacade.completePayoutsMore(1);
+
+        Thread.sleep(2000);
     }
 
-    public void runCollectItemsAndCompletePayoutsBatchJob() {
+    public void runCollectItemsAndCompletePayoutsBatchJob() throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString(
                         "runDate",
@@ -95,5 +99,7 @@ public class PayoutDataInit {
         } catch (JobRestartException e) {
             log.error("job restart exception", e);
         }
+
+        Thread.sleep(2000);
     }
 }

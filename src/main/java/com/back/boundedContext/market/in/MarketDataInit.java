@@ -184,11 +184,13 @@ public class MarketDataInit {
     }
 
     @Transactional
-    public void makeBasePaidOrders() {
+    public void makeBasePaidOrders() throws Exception {
         com.back.boundedContext.market.domain.Order order1 = marketFacade.findOrderById(1).get();
 
         if (order1.isPaid()) return;
 
         marketFacade.requestPayment(order1, 0);
+
+        Thread.sleep(2000);
     }
 }

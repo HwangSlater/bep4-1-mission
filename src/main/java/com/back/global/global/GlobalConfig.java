@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GlobalConfig {
-    public static String INTERNAL_CALL_BACK_URL;
-
     @Getter
     private static EventPublisher eventPublisher;
 

@@ -1,51 +1,121 @@
 package com.back.boundedContext.cash.in;
 
 import com.back.boundedContext.cash.app.CashFacade;
+import com.back.global.processedEvent.app.ProcessedEventFacade;
+import com.back.global.serviceName.ServiceName;
 import com.back.shared.cash.event.CashMemberCreatedEvent;
 import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
 import com.back.shared.member.event.MemberJoinedEvent;
 import com.back.shared.member.event.MemberModifiedEvent;
 import com.back.shared.payout.event.PayoutCompletedEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
-
-import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
-import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT;
 
 @Component
 @RequiredArgsConstructor
 public class CashEventListener {
     private final CashFacade cashFacade;
+    private final ProcessedEventFacade processedEventFacade;
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MemberJoinedEvent event) {
-        cashFacade.syncMember(event.member());
+    @KafkaListener(
+            topics = "MemberJoinedEvent",
+            groupId = "cash-service"
+    )
+    @Transactional
+    public void handleMemberJoined(MemberJoinedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        cashFacade.syncMember(event.getMember());
+
+        processedEventFacade.createProcessedEvent(
+                event.getEventId(),
+                ServiceName.CASH_SERVICE.value(),
+                event.getProducerServiceName(),
+                event.getEventType()
+        );
     }
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MemberModifiedEvent event) {
-        cashFacade.syncMember(event.member());
+    @KafkaListener(
+            topics = "MemberModifiedEvent",
+            groupId = "cash-service"
+    )
+    @Transactional
+    public void handleMemberModified(MemberModifiedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        cashFacade.syncMember(event.getMember());
+
+        processedEventFacade.createProcessedEvent(
+                event.getEventId(),
+                ServiceName.CASH_SERVICE.value(),
+                event.getProducerServiceName(),
+                event.getEventType()
+        );
     }
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(CashMemberCreatedEvent event) {
-        cashFacade.createWallet(event.cashMemberDto());
+    @KafkaListener(
+            topics = "CashMemberCreatedEvent",
+            groupId = "cash-service"
+    )
+    @Transactional
+    public void handleCashMemberCreated(CashMemberCreatedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        cashFacade.createWallet(event.getMember());
+
+        processedEventFacade.createProcessedEvent(
+                event.getEventId(),
+                ServiceName.CASH_SERVICE.value(),
+                event.getProducerServiceName(),
+                event.getEventType()
+        );
     }
 
-    @TransactionalEventListener(phase = AFTER_COMMIT)
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MarketOrderPaymentRequestedEvent event) {
-        cashFacade.completeOrderPayment(event.order(), event.pgPaymentAmount());
+    @KafkaListener(
+            topics = "MarketOrderPaymentRequestedEvent",
+            groupId = "cash-service"
+    )
+    @Transactional
+    public void handleMarketOrderPaymentRequested(MarketOrderPaymentRequestedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        cashFacade.completeOrderPayment(event.getOrder(), event.getPgPaymentAmount());
+
+        processedEventFacade.createProcessedEvent(
+                event.getEventId(),
+                ServiceName.CASH_SERVICE.value(),
+                event.getProducerServiceName(),
+                event.getEventType()
+        );
     }
 
-    @TransactionalEventListener
-    @Transactional(propagation = REQUIRES_NEW)
-    public void handle(PayoutCompletedEvent event) {
-        cashFacade.completePayout(event.payout());
+    @KafkaListener(
+            topics = "PayoutCompletedEvent",
+            groupId = "cash-service"
+    )
+    @Transactional
+    public void handlePayoutCompleted(PayoutCompletedEvent event) {
+        if (processedEventFacade.existsById(event.getEventId(), event.getProducerServiceName())) {
+            return;
+        }
+
+        cashFacade.completePayout(event.getPayout());
+
+        processedEventFacade.createProcessedEvent(
+                event.getEventId(),
+                ServiceName.CASH_SERVICE.value(),
+                event.getProducerServiceName(),
+                event.getEventType()
+        );
     }
 }
